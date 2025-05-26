@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Корзина покупок{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Корзина покупок</h1>
+
+{% if cart_items %}
+<div class="table-responsive">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Итого</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>
+                    <a href="{% url 'product_detail' item.product.slug %}" class="text-decoration-none">
+                        {{ item.product.name }}
+                    </a>
+                </td>
+                <td>{{ item.product.price }} руб.</td>
+                <td>
+                    <form method="post" action="{% url 'update_cart' item.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                               class="form-control" style="width: 80px;">
+                    </form>
+                </td>
+                <td>{{ item.total_price }} руб.</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot class="table-secondary">
+            <tr>
+                <th colspan="3">Общая сумма</th>
+                <th>{{ total }} руб.</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end mt-3">
+    <a href="#" class="btn btn-success">Оформить заказ</a>
+</div>
+{% else %}
+<div class="alert alert-info">
+    Ваша корзина пуста. <a href="{% url 'index' %}" class="alert-link">Вернуться к покупкам</a>
+</div>
+{% endif %}
+{% endblock %}

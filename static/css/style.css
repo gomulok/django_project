@@ -1,0 +1,34 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.form-control:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+.alert a {
+    text-decoration: underline;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
